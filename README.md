@@ -2,6 +2,19 @@
 
 A production-style authentication module: **NestJS + MongoDB** API and a **React + TypeScript** front-end, dockerized with an automatic data-seeding flow.
 
+## Live demo
+
+The project is also deployed on Vercel:
+
+| App | URL |
+| --- | --- |
+| Web UI | https://easy-generator-web-eslam-mohamed.vercel.app |
+| API / Swagger | https://easy-generator-api-eslam-mohamed.vercel.app/api |
+
+- MongoDB is hosted on MongoDB Atlas.
+- Both projects deploy automatically from `main` on every push (git-based deploys).
+- The Docker quick start below remains the supported local option.
+
 ## What's inside
 
 | App | Path | Stack |

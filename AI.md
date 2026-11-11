@@ -26,3 +26,7 @@ I used AI (an agentic coding assistant, Anthropic-class model) heavily throughou
 ## What was purely human
 
 - Deciding the milestone order, the schema/DTO shape, what "done" means for each test seam, and all trade-off decisions above. AI produced code fast; verifying it against a running stack (compose up, real curl calls against signup/signin/`/me`) is where the actual engineering happened — every bug above was caught that way, not by reading the generated code.
+
+## AI and the Vercel deployment
+
+The Vercel deployment itself was executed end-to-end via the Vercel MCP integration: creating both projects, setting the encrypted environment variables, and triggering the Git-based deploys from `main`. The first API deploy failed because `npm` workspaces were never installed at the Vercel project's root directory; reading the deployment event logs pinpointed the missing install, and the fix was a per-app `vercel.json` running install/build from the repo root, pushed as a single commit. The failure is a good example of AI-assisted debugging: read logs → diagnose root cause → one-commit fix, verified by the next green deploy.

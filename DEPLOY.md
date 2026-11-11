@@ -1,67 +1,56 @@
-# Deploying to Vercel (no credit card needed)
+# Deploying to Vercel
 
-Both apps deploy from this single GitHub repo as two separate Vercel projects.
-MongoDB runs on MongoDB Atlas (free tier, sign in with your GitHub/Google account).
+The stack is already live:
 
-## 1. Create the database (MongoDB Atlas)
+| Project | URL |
+| --- | --- |
+| `easy-generator-api` | https://easy-generator-api-eslam-mohamed.vercel.app (Swagger at `/api`) |
+| `easy-generator-web` | https://easy-generator-web-eslam-mohamed.vercel.app |
 
-1. Go to https://www.mongodb.com/cloud/atlas/register and sign up with GitHub/Google.
-2. Create a free **M0** cluster (no card required).
-3. Database Access → add a user (or use "Connect" autofill).
-4. Network Access → allow access from anywhere (`0.0.0.0/0`) — simplest for review purposes.
-5. Get the connection string, e.g.
-   `mongodb+srv://USER:PASS@cluster0.xxxxx.mongodb.net/easy-generator`
+MongoDB is hosted on MongoDB Atlas (`MONGO_URI` stored as an encrypted env var on the API project). Both projects are Git-based: every push to `main` auto-deploys them. The Docker-based local flow (`docker compose up --build`) remains supported and documented in the README.
 
-## 2. Deploy the API
+## Project setup reference
 
-1. Go to https://vercel.com/new and **Import** this GitHub repo (`Eslam-Mohamed78/easy-generator`).
-2. Project name: `easy-generator-api`.
-3. **Root Directory**: `apps/api` — enable "include files outside the root directory" when prompted (npm workspaces).
-4. Framework: NestJS is detected automatically (zero config).
-5. Add Environment Variables:
+Use this when redeploying or recreating from scratch. Both apps deploy from this single GitHub repo as two separate Vercel projects, built from the repo root via the per-app `vercel.json` in `apps/api` and `apps/web` (works around npm workspaces not being installed under the Vercel project's root directory).
+
+### API (`easy-generator-api`)
+
+- **Root Directory**: `apps/api` — enable "include files outside the root directory" when prompted (npm workspaces).
+- Framework: NestJS is detected automatically (zero config).
+- Environment variables:
 
 | Name | Value |
 | --- | --- |
-| `MONGO_URI` | your Atlas connection string from step 1 |
+| `MONGO_URI` | Atlas connection string |
 | `JWT_SECRET` | any long random string (e.g. `openssl rand -hex 32`) |
-| `CORS_ORIGIN` | `*` for now (lock down after the web app is deployed) |
+| `CORS_ORIGIN` | the web app's URL |
 | `RUN_SEED_ON_START` | `false` (Vercel functions don't run the Docker entrypoint) |
 
-6. Deploy. Note the API URL, e.g. `https://easy-generator-api.vercel.app`.
-7. Seed demo users by hitting the signup endpoint once:
+### Web (`easy-generator-web`)
+
+- **Root Directory**: `apps/web`.
+- Framework: Vite is detected automatically.
+- Environment variable: `VITE_API_URL` = the API URL (no trailing slash).
+
+### Seeding demo users
+
+With `RUN_SEED_ON_START=false`, seed by hitting signup once:
 
 ```bash
-curl -X POST https://<your-api>/auth/signup \
+curl -X POST https://easy-generator-api-eslam-mohamed.vercel.app/auth/signup \
   -H 'Content-Type: application/json' \
   -d '{"email":"demo@example.com","name":"Demo User","password":"Str0ng!Pass1"}'
 ```
 
-## 3. Deploy the web app
-
-1. https://vercel.com/new → **Import the same repo** again.
-2. Project name: `easy-generator-web`.
-3. **Root Directory**: `apps/web`.
-4. Framework: Vite is detected automatically.
-5. Add Environment Variable:
-
-| Name | Value |
-| --- | --- |
-| `VITE_API_URL` | `https://<your-api-url>` from step 2 (no trailing slash) |
-
-6. Deploy.
-7. Back to the **API project** → Settings → Environment Variables → set
-   `CORS_ORIGIN` to the web app's URL (e.g. `https://easy-generator-web.vercel.app`) → Redeploy API.
-
-## 4. Verify
+## Verify
 
 - Open the web URL → `/signup`, create an account → lands on the app page.
-- `GET https://<your-api>/me` without a token must return `401`.
-- Swagger: `https://<your-api>/api`.
+- `GET /me` without a token must return `401`.
+- Swagger: https://easy-generator-api-eslam-mohamed.vercel.app/api
 
-## Notes
+## Troubleshooting / notes
 
-- The API runs as a single Vercel Function (Fluid compute). No Docker needed on Vercel —
-  the Dockerfiles are for local `docker compose up`.
-- Vercel functions don't "wait for mongo" like the Docker entrypoint; Atlas' free tier
-  is fine as long as the connection string and network access are set.
+- npm workspaces at the Vercel project level failed on the first deploy; the per-app `vercel.json` files run install/build commands from the repo root to fix this.
+- The API runs as a single Vercel Function (Fluid compute). No Docker on Vercel — the Dockerfiles are for local `docker compose up`.
+- Vercel functions don't "wait for mongo" like the Docker entrypoint; Atlas' free tier is fine as long as the connection string and network access are set.
 - If the API cold-starts slowly on the first request, that's normal on the Hobby plan.
