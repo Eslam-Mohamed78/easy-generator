@@ -23,7 +23,7 @@ Use this when redeploying or recreating from scratch. Both apps deploy from this
 | --- | --- |
 | `MONGO_URI` | Atlas connection string |
 | `JWT_SECRET` | any long random string (e.g. `openssl rand -hex 32`) |
-| `CORS_ORIGIN` | the web app's URL |
+| `CORS_ORIGIN` | locked to the web production URL (`https://easy-generator-web-eslam-mohamed.vercel.app`) in production |
 | `RUN_SEED_ON_START` | `false` (Vercel functions don't run the Docker entrypoint) |
 
 ### Web (`easy-generator-web`)
@@ -31,6 +31,8 @@ Use this when redeploying or recreating from scratch. Both apps deploy from this
 - **Root Directory**: `apps/web`.
 - Framework: Vite is detected automatically.
 - Environment variable: `VITE_API_URL` = the API URL (no trailing slash).
+- SPA routing uses a rewrite rule in `apps/web/vercel.json` (index.html fallback).
+- `outputDirectory` in `apps/web/vercel.json` must stay relative (`"dist"`) because Root Directory is `apps/web`.
 
 ### Seeding demo users
 
