@@ -8,7 +8,7 @@ export function AppPage() {
   return (
     <div className="min-h-screen bg-slate-100">
       <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
-        <span className="text-sm font-semibold text-slate-900">Easy Generator</span>
+        <img src="/logo.svg" alt="Easygenerator" className="h-7" />
         <button
           onClick={() => {
             logout();
