@@ -1,42 +1,49 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth-context';
 
-const capabilities = [
+const stats = [
+  { value: '3 yrs', label: 'TypeScript · NestJS · React' },
+  { value: '2,000+/min', label: 'transactions in production' },
+  { value: '5,000+/min', label: 'real-time updates served' },
+  { value: '99.99%', label: 'uptime on live systems' },
+];
+
+const highlights = [
   {
-    title: 'Live Sessions & Meetings',
-    detail: 'WebRTC video classrooms powered by LiveKit — real-time teaching at scale, which is exactly the meeting feature space Easygenerator builds in.',
+    title: 'I know this product space',
+    detail:
+      'Worked on Eduvation, an e-learning platform with live sessions, online courses and content recommendations — the same problems Easygenerator solves for its customers.',
+    icon: '🎓',
+  },
+  {
+    title: 'Owned the meetings feature end-to-end',
+    detail:
+      'My core role on Eduvation: WebRTC live video classrooms powered by LiveKit, integrated from the NestJS back end through to the student and instructor dashboards.',
     icon: '🎥',
-    tag: 'Core focus',
   },
   {
-    title: 'Real-Time Chat',
-    detail: 'In-class messaging between students and instructors during live sessions, built on the same NestJS gateway patterns as this auth API.',
-    icon: '💬',
-    tag: 'Real-time',
+    title: 'Real-time systems under real load',
+    detail:
+      'At DYNO Teck I built a location-tracking server handling 5,000+ updates per minute (NestJS, Socket.IO, MongoDB, Firebase) — shipped live on Google Play as Voltrack Rider.',
+    icon: '⚡',
   },
   {
-    title: 'Payments & Monetization',
-    detail: 'Secure Stripe checkout for course purchases — handling real money flows in an education product.',
+    title: 'Payments, my specialty',
+    detail:
+      'Led Paymob and Stripe gateway integrations (+60% transaction volume) and built a ZATCA e-invoicing flow at 100% tax-authority compliance — payment flows are familiar ground.',
     icon: '💳',
-    tag: 'Stripe',
   },
   {
-    title: 'Course Recommendations',
-    detail: 'A personalized recommendation engine that suggests courses from student progress and interests.',
-    icon: '🎯',
-    tag: 'Personalization',
+    title: 'Front to back, DB schema to deployed UI',
+    detail:
+      'React/Next.js + Tailwind on the front, NestJS + Mongoose on the back, Docker and CI/CD pipelines in between — exactly the spread this full-stack task covers.',
+    icon: '🧩',
   },
   {
-    title: 'Role-Based Dashboards',
-    detail: 'Separate student and instructor dashboards with granular, role-aware access control.',
-    icon: '🧑‍🏫',
-    tag: 'RBAC',
-  },
-  {
-    title: 'Progress Tracking',
-    detail: 'Durable student progress tracking across courses and lessons.',
-    icon: '📈',
-    tag: 'Analytics',
+    title: 'Battle-tested reliability',
+    detail:
+      'An accounting microservice at 2,000+ tpm and 99.99% uptime, PM2 performance profiling, CI/CD that cut deployment errors 90% — production discipline, not just features.',
+    icon: '🛡️',
   },
 ];
 
@@ -59,7 +66,7 @@ export function AppPage() {
         </button>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 pb-16 pt-10">
+      <main className="mx-auto max-w-4xl px-4 pb-16 pt-10">
         {/* Required welcome message, branded */}
         <section className="relative overflow-hidden rounded-2xl bg-[#FC794B] px-8 py-10 text-white shadow-lg shadow-orange-200">
           <div className="absolute -right-10 -top-16 h-56 w-56 rounded-full bg-white/10" aria-hidden="true" />
@@ -70,39 +77,47 @@ export function AppPage() {
             </p>
           )}
           <p className="mt-4 max-w-xl text-sm text-white/80">
-            Built as a full-stack authentication module — and here's where I've shipped education tech before.
+            Who's behind this task — and why this role fits.
           </p>
         </section>
 
-        {/* Eduvation showcase */}
+        {/* Stat strip */}
+        <section className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="rounded-xl border border-slate-200 bg-white px-4 py-4 text-center shadow-sm">
+              <div className="text-lg font-bold text-[#FC794B] sm:text-xl">{s.value}</div>
+              <div className="mt-1 text-[11px] leading-tight text-slate-500">{s.label}</div>
+            </div>
+          ))}
+        </section>
+
+        {/* Experience brief */}
         <section className="mt-10">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 className="text-xl font-bold text-slate-900">
-              My graduation project: <span className="text-[#FC794B]">Eduvation Learning Platform</span>
-            </h2>
-            <span className="text-xs font-medium uppercase tracking-wide text-slate-400">Relevant experience</span>
-          </div>
-          <p className="mt-2 max-w-3xl text-sm text-slate-600">
-            A full-stack e-learning platform built with <strong>NestJS</strong> (the same framework as this API): live
-            sessions, online courses, and intelligent content recommendations. It demonstrates I've already worked on
-            the exact problem space Easygenerator operates in — and I built its <strong>meeting feature</strong>
-            end-to-end.
+          <h2 className="text-xl font-bold text-slate-900">Why I'm a fit for this role</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
+            I'm a full-stack engineer who's spent 3 years building production systems on{' '}
+            <strong className="text-slate-900">NestJS + MongoDB + React</strong>. I've worked on{' '}
+            <strong className="text-slate-900">Eduvation</strong>, a courses platform delivering live sessions, online
+            courses and personalized content recommendations, where my main responsibility was the{' '}
+            <strong className="text-slate-900">meetings feature — WebRTC live video classrooms powered by LiveKit</strong>,
+            owned end-to-end from back end to dashboard. Before that I shipped high-throughput real-time and payments
+            infrastructure in production. Courses platform experience plus the exact stack of this task: that's the
+            combination I bring to Easygenerator from day one.
           </p>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {capabilities.map((c) => (
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {highlights.map((h) => (
               <div
-                key={c.title}
-                className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[#FC794B]/40 hover:shadow-md"
+                key={h.title}
+                className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[#FC794B]/40 hover:shadow-md"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl" aria-hidden="true">{c.icon}</span>
-                  <span className="rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#FC794B]">
-                    {c.tag}
-                  </span>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl" aria-hidden="true">{h.icon}</span>
+                  <div>
+                    <h3 className="font-semibold text-slate-900">{h.title}</h3>
+                    <p className="mt-1 text-sm text-slate-500">{h.detail}</p>
+                  </div>
                 </div>
-                <h3 className="mt-3 font-semibold text-slate-900">{c.title}</h3>
-                <p className="mt-1 text-sm text-slate-500">{c.detail}</p>
               </div>
             ))}
           </div>
