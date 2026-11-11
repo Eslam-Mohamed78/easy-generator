@@ -124,7 +124,16 @@ export function AppPage() {
         </section>
 
         <footer className="mt-10 text-center text-xs text-slate-400">
-          Full-stack task · NestJS + MongoDB + React + TypeScript · dockerized with seeded demo accounts
+          Built by Eslam Mohamed ·{' '}
+          <a
+            href="https://github.com/Eslam-Mohamed78"
+            target="_blank"
+            rel="noreferrer"
+            className="text-slate-500 underline decoration-slate-300 underline-offset-2 hover:text-[#FC794B]"
+          >
+            github.com/Eslam-Mohamed78
+          </a>{' '}
+          · Full-stack task · NestJS + MongoDB + React + TypeScript · dockerized with seeded demo accounts
         </footer>
       </main>
     </div>

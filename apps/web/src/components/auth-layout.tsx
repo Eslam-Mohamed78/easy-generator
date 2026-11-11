@@ -15,6 +15,9 @@ export function AuthLayout({ title, subtitle, children }: Props) {
           {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
           <div className="mt-6">{children}</div>
         </div>
+        <p className="mt-4 text-center text-xs text-slate-400">
+          Built by <span className="font-medium text-slate-500">Eslam Mohamed</span> · Full Stack Engineer
+        </p>
       </div>
     </div>
   );
