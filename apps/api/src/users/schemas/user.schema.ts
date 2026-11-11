@@ -1,19 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Document, HydratedDocument } from 'mongoose';
 
 @Schema({ collection: 'users', timestamps: true })
 export class User {
   @Prop({ required: true, unique: true, lowercase: true, trim: true })
-  email!: string;
+  email: string;
 
   @Prop({ required: true, trim: true, minlength: 3 })
-  name!: string;
+  name: string;
 
   @Prop({ required: true, select: false })
-  passwordHash!: string;
+  passwordHash: string;
 
-  createdAt!: Date;
-  updatedAt!: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type UserDocument = HydratedDocument<User>;
@@ -29,3 +29,9 @@ UserSchema.set('toJSON', {
     };
   },
 });
+
+export type UserDocumentJson = Document<unknown, object, User> & {
+  id: string;
+  email: string;
+  name: string;
+};
