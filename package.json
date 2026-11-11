@@ -1,0 +1,21 @@
+{
+  "name": "easy-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack auth task: NestJS + MongoDB API and React front-end",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "api:dev": "npm run dev -w apps/api",
+    "api:seed": "npm run seed -w apps/api",
+    "web:dev": "npm run dev -w apps/web",
+    "api:build": "npm run build -w apps/api",
+    "web:build": "npm run build -w apps/web",
+    "test": "npm run test -w apps/api && npm run test -w apps/web",
+    "typecheck": "npm run typecheck -w apps/api && npm run typecheck -w apps/web"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
