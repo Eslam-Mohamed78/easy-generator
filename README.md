@@ -90,6 +90,14 @@ Web UI: http://localhost:5173
 
 Interactive docs: `http://localhost:3001/api` when the API is running.
 
+> **Note on Swagger in deployment:** On the Vercel deployment, the interactive Swagger UI is
+> intentionally not part of the API. Vercel functions are serverless bundles: NestJS serves
+> Swagger's static assets (CSS/JS) via `useStaticAssets`, and Vercel's file tracing does not
+> include those assets in the Lambda package. The OpenAPI spec itself is still exposed in
+> production at `GET /api-json` (can be pasted into any Swagger/Postman client). Run the API
+> locally — `npm run api:dev` or `docker compose up --build` — for the full interactive
+> Swagger experience at `/api`.
+
 ## Tests
 
 ```bash

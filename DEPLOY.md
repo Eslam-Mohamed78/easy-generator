@@ -4,7 +4,7 @@ The stack is already live:
 
 | Project | URL |
 | --- | --- |
-| `easy-generator-api` | https://easy-generator-api-eslam-mohamed.vercel.app (Swagger at `/api`) |
+| `easy-generator-api` | https://easy-generator-api-eslam-mohamed.vercel.app (OpenAPI spec at `/api-json`) |
 | `easy-generator-web` | https://easy-generator-web-eslam-mohamed.vercel.app |
 
 MongoDB is hosted on MongoDB Atlas (`MONGO_URI` stored as an encrypted env var on the API project). Both projects are Git-based: every push to `main` auto-deploys them. The Docker-based local flow (`docker compose up --build`) remains supported and documented in the README.
@@ -48,7 +48,16 @@ curl -X POST https://easy-generator-api-eslam-mohamed.vercel.app/auth/signup \
 
 - Open the web URL → `/signup`, create an account → lands on the app page.
 - `GET /me` without a token must return `401`.
-- Swagger: https://easy-generator-api-eslam-mohamed.vercel.app/api
+- OpenAPI spec (production): https://easy-generator-api-eslam-mohamed.vercel.app/api-json
+
+## Swagger
+
+The interactive Swagger UI works only when running locally (`npm run api:dev` or
+`docker compose up --build`, then open `/api` on the API server). On Vercel the API is a
+serverless function: NestJS serves Swagger's static assets via `useStaticAssets`, and
+Vercel's file tracing does not include those non-Node assets in the deployed bundle, so the
+UI shell can't render in production. The OpenAPI JSON spec is still exposed at `/api-json`
+and can be imported into Swagger UI or Postman.
 
 ## Troubleshooting / notes
 
