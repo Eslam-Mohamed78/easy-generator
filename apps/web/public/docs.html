@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Docs — Easy Generator</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css" />
+    <style>
+      body { margin: 0; background: #fafafa; }
+      .topbar { padding: 10px 16px; }
+      .topbar a { color: #fff; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js" crossorigin></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-standalone-preset.js" crossorigin></script>
+    <script>
+      window.onload = function () {
+        const apiBase =
+          window.VITE_API_URL ||
+          (location.hostname.includes('web')
+            ? 'https://easy-generator-api-eslam-mohamed.vercel.app'
+            : location.origin);
+        window.ui = SwaggerUIBundle({
+          url: apiBase + '/api-json',
+          dom_id: '#swagger-ui',
+          deepLinking: true,
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: 'StandaloneLayout',
+        });
+      };
+    </script>
+  </body>
+</html>
