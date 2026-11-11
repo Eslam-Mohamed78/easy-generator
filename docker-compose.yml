@@ -1,0 +1,42 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      PORT: 3001
+      MONGO_URI: mongodb://mongo:27017/easy-generator
+      JWT_SECRET: ${JWT_SECRET:-change-me}
+      CORS_ORIGIN: http://localhost:8080
+      RUN_SEED_ON_START: ${RUN_SEED_ON_START:-true}
+      SEED_USERS: ${SEED_USERS:-[{"email":"demo@example.com","name":"Demo User","password":"Str0ng!Pass1"}]}
+    ports:
+      - "3001:3001"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+
+volumes:
+  mongo-data:
