@@ -87,3 +87,8 @@ npm run typecheck   # TypeScript across both apps
 ## CI
 
 GitHub Actions runs install → typecheck → tests on every push (see `.github/workflows/ci.yml`).
+
+## Author
+
+**Eslam Mohamed** — Full Stack Engineer (TypeScript / NestJS / React)
+[github.com/Eslam-Mohamed78](https://github.com/Eslam-Mohamed78) · [eslammohamed.vercel.app](https://eslammohamed.vercel.app)
